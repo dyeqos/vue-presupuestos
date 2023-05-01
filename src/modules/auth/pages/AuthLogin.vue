@@ -1,33 +1,31 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-// import { api } from 'boot/axios';
-// import { useAuthStore } from '../store/authStore';
-import  useAuth  from '../composables/useAuth';
+import { useRouter } from 'vue-router';
+import useAuth from '../composables/useAuth';
 
-// const authStore = useAuthStore();
+const { authLogin } = useAuth();
+const router = useRouter();
+
 const email = ref('dyeqos@gmail.com');
 const password = ref('123456');
 
-const login = () => {
+const login = async () => {
+  const objLogin = {
+    correo: email.value,
+    password: password.value,
+  };
 
-  const {auth} = useAuth( {correo:email.value ,password: password.value } )
-
-  console.log(auth)
-  // const loguin = await api.post('/auth/login', {
-  //   correo: email.value,
-  //   password: password.value,
-  // });
-
-  // console.log(loguin);
-
-  // loguin.then(({ data }) => {
-  //   console.log(data);
-  //   if (data.ok === true) {
-  //     authStore.setToken(data.msg);
-  //   }
-  // });
+  const login = await authLogin(objLogin);
+  if (login.ok === true) {
+    //redirect main
+    router.push({ name: 'dashboard' });
+  } else {
+    //msg error
+    console.log('usuario o contraseña incorrecto');
+  }
 };
 </script>
+
 <template>
   <q-card-section class="q-my-lg">
     <div class="text-center text-h3">Login</div>

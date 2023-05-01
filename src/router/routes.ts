@@ -1,15 +1,31 @@
 import { RouteRecordRaw } from 'vue-router';
+import isAuthenticated from 'src/guards/auth-guard';
+import dashboardRoute from '../modules/dashboard/routes/dashboard-route';
+import usersRoute from '../modules/users/routes/users-route';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/auth',
-    component: () => import('../models/auth/layouts/AuthMain.vue'),
+    component: () => import('../modules/auth/layouts/AuthMain.vue'),
     children: [
       {
         path: 'login',
-        component: () => import('../models/auth/pages/AuthLogin.vue'),
+        name: 'auth-login',
+        component: () => import('../modules/auth/pages/AuthLogin.vue'),
       },
     ],
+  },
+  {
+    path: '/dashboard',
+    beforeEnter: [isAuthenticated],
+    component: () => import('layouts/MainLayout.vue'),
+    children: dashboardRoute,
+  },
+  {
+    path: '/users',
+    beforeEnter: [isAuthenticated],
+    component: () => import('layouts/MainLayout.vue'),
+    children: usersRoute,
   },
   {
     path: '/',

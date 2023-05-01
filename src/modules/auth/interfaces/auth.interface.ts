@@ -1,4 +1,4 @@
 export interface AuthInterface {
-  ok: string;
+  ok: boolean;
   msg: string;
 }

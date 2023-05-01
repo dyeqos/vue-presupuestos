@@ -1,21 +1,16 @@
-import { boot } from 'quasar/wrappers'
-import { VueQueryPlugin } from "@tanstack/vue-query";
+import { boot } from 'quasar/wrappers';
+import { VueQueryPlugin } from '@tanstack/vue-query';
 // "async" is optional;
 // more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export default boot(async ({ app } ) => {
-  
-  VueQueryPlugin.install( app, {
-    
+export default boot(async ({ app }) => {
+  VueQueryPlugin.install(app, {
     //configraciones default
-    queryClientConfig:{
-      defaultOptions:{
-        queries:{
-          cacheTime: 1000 * 60,
-        }
-      }
-    }
-    
-  })
-
-  
-})
+    queryClientConfig: {
+      defaultOptions: {
+        queries: {
+          cacheTime: 1000 * 60 * 60,
+        },
+      },
+    },
+  });
+});
