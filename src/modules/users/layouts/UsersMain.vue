@@ -3,7 +3,7 @@
   <q-card class="q-ma-md" flat bordered>
     <q-item>
       <q-item-section avatar>
-        <q-icon class="q-mx-auto" flat round name="group" />
+        <q-icon class="q-mx-auto" flat round name="mdi-account-group" />
       </q-item-section>
 
       <q-item-section>
@@ -14,8 +14,8 @@
 
     <q-separator />
 
-    <q-card-section horizontal class="q-pa-md">
-        <RouterView />
+    <q-card-section class="q-pa-md">
+      <RouterView />
     </q-card-section>
   </q-card>
 </template>

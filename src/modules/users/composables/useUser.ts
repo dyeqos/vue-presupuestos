@@ -1,5 +1,5 @@
 // import { useQuery } from '@tanstack/vue-query';
-// import { storeToRefs } from 'pinia';
+import { storeToRefs } from 'pinia';
 import { UserResponseInterface } from '../interfaces/response.interface';
 import { useUserStore } from '../store/userStore';
 import { api } from 'src/boot/axios';
@@ -20,7 +20,7 @@ const getUserResponse = async (): Promise<UserResponseInterface> => {
 
 const useUser = () => {
   const store = useUserStore();
-  // const {  } = storeToRefs(store);
+  const { userList } = storeToRefs(store);
 
   // USE-QUERY9
   // const data = useQuery( (data:string) => {
@@ -46,6 +46,7 @@ const useUser = () => {
 
   return {
     getUserList,
+    userList,
   };
 };
 
