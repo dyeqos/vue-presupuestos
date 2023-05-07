@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-import useUser from '../composables/useUser';
-const {getUserList} = useUser();
-const data = getUserList();
+import UsersTable from '../components/UsersTable.vue';
+import UserModal from '../components/UserModal.vue';
 </script>
 <template>
-    <q-btn icon="add" label="Crear" color="primary"></q-btn>
+  <q-btn icon="mdi-plus" label="Crear" color="primary" />
+  <q-space></q-space>
+  <Suspense>
+    <UsersTable></UsersTable>
+  </Suspense>
+  <UserModal></UserModal>
 </template>

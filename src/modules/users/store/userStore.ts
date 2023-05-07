@@ -9,12 +9,12 @@ export const useUserStore = defineStore('user', () => {
     //state
     userList,
     //getters
-    getUserList() {
-      return userList;
-    },
+    // getUserList() {
+    //   return userList;
+    // },
     //actions
-    setUserList(data: UserModel[]){
-        userList.value = data
+    setUserList(data: UserModel[]) {
+      userList.value = data
     }
   };
 });
