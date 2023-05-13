@@ -20,7 +20,7 @@ const getUserResponse = async (): Promise<UserResponseInterface> => {
 
 const useUser = () => {
   const store = useUserStore();
-  const { userList } = storeToRefs(store);
+  const { userList, user } = storeToRefs(store);
 
   // USE-QUERY9
   // const data = useQuery( (data:string) => {
@@ -47,6 +47,8 @@ const useUser = () => {
   return {
     getUserList,
     userList,
+    user,
+    setUser: store.setUser
   };
 };
 

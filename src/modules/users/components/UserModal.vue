@@ -1,48 +1,74 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import useModal from '../composables/useModal';
+import useUser from '../composables/useUser';
 
-const card = ref<boolean>(true);
+//import { UserModel } from '../models/user.model';
+
+const { modalState, setModalState } = useModal();
+const {
+  //setUser,
+  user,
+} = useUser();
+
+const userRef = ref(user);
+const state = ref<boolean>(modalState.value);
+
+watch(state, () => {
+  setModalState(state.value);
+});
+watch(modalState, () => {
+  state.value = modalState.value;
+});
+const par = [
+  {
+    id: 1,
+    nombre: 'Admin',
+  },
+];
+const save = () => {
+  console.log(userRef);
+};
 </script>
 <template>
-  <q-dialog v-model="card">
-    <q-card class="my-card">
-      <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+  <q-dialog v-model="state">
+    <q-card>
+      <q-form @submit="save">
+        <q-card-section>
+          <div class="text-h6">Usuario</div>
+          <div class="text-subtitle">Crear Usuario</div>
+        </q-card-section>
+        <q-separator />
+        <q-card-section>
+          <q-input v-model="userRef.nombre" label="PATERNO"></q-input>
+          <q-input v-model="userRef.nombre" label="MATERNO"></q-input>
+          <q-input v-model="userRef.nombre" label="NOMBRE"></q-input>
+          <q-select
+            v-model="userRef.nombre"
+            :options="par"
+            label="Rol de Usuario"
+          />
+        </q-card-section>
 
-      <q-card-section>
-        <q-btn
-          fab
-          color="primary"
-          icon="place"
-          class="absolute"
-          style="top: 0; right: 12px; transform: translateY(-50%)"
-        />
+        <q-separator />
 
-        <div class="row no-wrap items-center">
-          <div class="col text-h6 ellipsis">Cafe Basilico</div>
-          <div
-            class="col-auto text-grey text-caption q-pt-md row no-wrap items-center"
-          >
-            <q-icon name="place" />
-            250 ft
-          </div>
-        </div>
-
-        <q-rating v-model="stars" :max="5" size="32px" />
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="text-subtitle1">$・Italian, Cafe</div>
-        <div class="text-caption text-grey">
-          Small plates, salads & sandwiches in an intimate setting.
-        </div>
-      </q-card-section>
-
-      <q-separator />
-
-      <q-card-actions align="right">
-        <q-btn v-close-popup flat color="primary" label="Reserve" />
-        <q-btn v-close-popup flat color="primary" round icon="event" />
-      </q-card-actions>
+        <q-card-actions class="right-action">
+          <q-btn v-close-popup flat color="primary" label="Cancelar" />
+          <q-btn v-close-popup color="primary" label="Guardar" type="submit" />
+        </q-card-actions>
+      </q-form>
     </q-card>
   </q-dialog>
 </template>
+<style scoped>
+.q-card {
+  width: 500px;
+  max-width: 80vw;
+}
+.right-action {
+  float: right !important;
+}
+.q-field {
+  margin-bottom: 5px;
+}
+</style>
