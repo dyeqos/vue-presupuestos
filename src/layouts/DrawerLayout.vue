@@ -18,10 +18,23 @@ const menuList: MenuItemInterface[] = [
     link: '#/users',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'mdi-alert-circle',
-    link: 'https://chat.quasar.dev',
+    title: 'Activos',
+    caption: 'Gestion de Activos',
+    icon: 'mdi-view-list',
+    children: [
+      {
+        title: 'Mis Activos',
+        caption: 'Activos Adquiridos',
+        icon: 'mdi-store-cog-outline',
+        link: '#/active',
+      },
+      {
+        title: 'Activos Presupuestados',
+        caption: 'Activos Deseados',
+        icon: 'mdi-store',
+        link: '#/active',
+      },
+    ],
   },
   {
     title: 'Forum',
