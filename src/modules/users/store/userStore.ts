@@ -6,10 +6,11 @@ export const useUserStore = defineStore('user', () => {
   //state
   const userList = ref<UserModel[]>([]);
   const user = ref<UserModel>({
-    correo: '',
-    materno: '',
-    nombre: '',
-    paterno: '',
+    correo: null,
+    materno: null,
+    nombre: null,
+    paterno: null,
+    password: null,
     rol: {
       _id: '',
       nombre: '',

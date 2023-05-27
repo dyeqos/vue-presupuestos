@@ -6,12 +6,13 @@ import useParameter from '../../parameter/composables/useParameter';
 
 import { UserModel } from '../models/user.model';
 import { ParameterModel } from '../../parameter/models/parameter.model';
+import { isValidEmail } from '../../../tools/validations/format.validation';
 
 const { modalState } = useModal();
 const { getParameterList, parameterList } = useParameter();
-const { user } = useUser();
+const { user: userRef } = useUser();
 
-const userRef = ref<UserModel>(user.value);
+//const userRef = ref<UserModel>(user.value);
 const parameterRolList = ref<ParameterModel[]>([]);
 //methods
 const getRolParameter = async () => {
@@ -23,7 +24,9 @@ const getRolParameter = async () => {
 };
 getRolParameter();
 const save = () => {
-  console.log(userRef);
+  userRef.value.password = userRef.value.correo;
+  console.log(userRef.value);
+  console.log(parameterRolList.value);
 };
 </script>
 <template>
@@ -36,15 +39,34 @@ const save = () => {
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-input v-model="userRef.paterno" label="Apellido Paterno"></q-input>
-          <q-input v-model="userRef.materno" label="Apellido Materno"></q-input>
-          <q-input v-model="userRef.nombre" label="Nombres"></q-input>
+          <q-input
+            v-model="userRef.paterno"
+            label="Apellido Paterno"
+            @update:model-value="(val) => val?.toString().toUpperCase()"
+          ></q-input>
+          <q-input
+            v-model="userRef.materno"
+            label="Apellido Materno"
+            class="text-uppercase"
+          ></q-input>
+          <q-input
+            v-model="userRef.nombre"
+            label="Nombres"
+            class="text-uppercase"
+          ></q-input>
+          <q-input
+            v-model="userRef.correo"
+            label="Correo"
+            :rules="[(val:string)=> isValidEmail(val) || 'No es un correo válido']"
+            class="text-lowercase"
+          ></q-input>
           <q-select
-            v-model="userRef.rol._id"
+            v-model="userRef.rol"
             :options="parameterRolList"
-            option-value="_id"
+            option-value="uid"
             option-label="nombre"
             label="Rol de Usuario"
+            emit-value
           />
         </q-card-section>
 
@@ -52,7 +74,7 @@ const save = () => {
 
         <q-card-actions class="right-action">
           <q-btn v-close-popup flat color="primary" label="Cancelar" />
-          <q-btn v-close-popup color="primary" label="Guardar" type="submit" />
+          <q-btn color="primary" label="Guardar" type="submit" />
         </q-card-actions>
       </q-form>
     </q-card>
