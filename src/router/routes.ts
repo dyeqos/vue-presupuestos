@@ -2,6 +2,7 @@ import { RouteRecordRaw } from 'vue-router';
 import isAuthenticated from 'src/guards/auth-guard';
 import dashboardRoute from '../modules/dashboard/routes/dashboard-route';
 import usersRoute from '../modules/users/routes/users-route';
+import activeRoute from '../modules/active/routes/active-route';
 
 const routes: RouteRecordRaw[] = [
   {
@@ -26,6 +27,12 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [isAuthenticated],
     component: () => import('layouts/MainLayout.vue'),
     children: usersRoute,
+  },
+  {
+    path: '/active',
+    beforeEnter: [isAuthenticated],
+    component: () => import('layouts/MainLayout.vue'),
+    children: activeRoute,
   },
   {
     path: '/',

@@ -3,12 +3,12 @@ import { RouteRecordRaw } from 'vue-router';
 const routeDashboard: RouteRecordRaw[] = [
   {
     path: '',
-    component: () => import('../layouts/DashboardMain.vue'),
+    component: () => import('../layouts/ActiveMain.vue'),
     children: [
       {
         path: '',
         name: 'activos-gestion',
-        component: () => import('../pages/ActivosPage.vue'),
+        component: () => import('../pages/ActivePage.vue'),
       },
     ],
   },
