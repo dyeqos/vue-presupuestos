@@ -1,37 +1,33 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import useModal from '../composables/useModal';
 import useUser from '../composables/useUser';
+import useParameter from '../../parameter/composables/useParameter';
 
-//import { UserModel } from '../models/user.model';
+import { UserModel } from '../models/user.model';
+import { ParameterModel } from '../../parameter/models/parameter.model';
 
-const { modalState, setModalState } = useModal();
-const {
-  //setUser,
-  user,
-} = useUser();
+const { modalState } = useModal();
+const { getParameterList, parameterList } = useParameter();
+const { user } = useUser();
 
-const userRef = ref(user);
-const state = ref<boolean>(modalState.value);
-
-watch(state, () => {
-  setModalState(state.value);
-});
-watch(modalState, () => {
-  state.value = modalState.value;
-});
-const par = [
-  {
-    id: 1,
-    nombre: 'Admin',
-  },
-];
+const userRef = ref<UserModel>(user.value);
+const parameterRolList = ref<ParameterModel[]>([]);
+//methods
+const getRolParameter = async () => {
+  const data = await getParameterList('roles');
+  if (data.ok === true) {
+    parameterRolList.value = parameterList();
+  }
+  console.log(parameterRolList);
+};
+getRolParameter();
 const save = () => {
   console.log(userRef);
 };
 </script>
 <template>
-  <q-dialog v-model="state">
+  <q-dialog v-model="modalState">
     <q-card>
       <q-form @submit="save">
         <q-card-section>
@@ -40,12 +36,14 @@ const save = () => {
         </q-card-section>
         <q-separator />
         <q-card-section>
-          <q-input v-model="userRef.nombre" label="PATERNO"></q-input>
-          <q-input v-model="userRef.nombre" label="MATERNO"></q-input>
-          <q-input v-model="userRef.nombre" label="NOMBRE"></q-input>
+          <q-input v-model="userRef.paterno" label="Apellido Paterno"></q-input>
+          <q-input v-model="userRef.materno" label="Apellido Materno"></q-input>
+          <q-input v-model="userRef.nombre" label="Nombres"></q-input>
           <q-select
-            v-model="userRef.nombre"
-            :options="par"
+            v-model="userRef.rol._id"
+            :options="parameterRolList"
+            option-value="_id"
+            option-label="nombre"
             label="Rol de Usuario"
           />
         </q-card-section>
