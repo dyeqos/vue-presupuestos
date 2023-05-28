@@ -1,50 +1,51 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { QTableProps } from 'quasar';
 
 import useUser from '../composables/useUser';
-import { UserModel } from '../models/user.model';
+import useModal from '../composables/useModal';
 
+import { UserModelList } from '../models/user.model';
 //use composable
-const { getUserList, userList } = useUser();
+const { getUserList, userList, user, deleteUser } = useUser();
+const { modalState } = useModal();
 //table
-const rows = ref<UserModel[]>([]);
+const rows = userList;
 const columns: QTableProps['columns'] = [
   {
     name: 'paterno',
     label: 'PATERNO',
     align: 'center',
-    field: (row: UserModel) => row.paterno,
+    field: (row: UserModelList) => row.paterno,
   },
   {
     name: 'materno',
     label: 'MATERNO',
     align: 'center',
-    field: (row: UserModel) => row.materno,
+    field: (row: UserModelList) => row.materno,
   },
   {
     name: 'nombre',
     label: 'NOMBRE',
     align: 'center',
-    field: (row: UserModel) => row.nombre,
+    field: (row: UserModelList) => row.nombre,
   },
   {
     name: 'correo',
     label: 'CORREO',
     align: 'center',
-    field: (row: UserModel) => row.correo,
+    field: (row: UserModelList) => row.correo,
   },
   {
     name: 'rol',
     label: 'ROL',
     align: 'center',
-    field: (row: UserModel) => row.rol.nombre,
+    field: (row: UserModelList) => row.rol.nombre,
   },
   {
     name: 'estado',
     label: 'ESTADO',
     align: 'center',
-    field: (row: UserModel) => row.estado,
+    field: (row: UserModelList) => row.estado,
     format: (val: boolean) => (val === true ? 'ACTIVO' : 'INACTIVO'),
   },
   {
@@ -55,18 +56,26 @@ const columns: QTableProps['columns'] = [
   },
 ];
 //get users
-const data = await getUserList();
-if (data.ok === true) {
-  rows.value = userList.value;
-} else {
-  rows.value = [];
-}
+await getUserList();
 //metodos
-const editRow = (data: UserModel) => {
-  console.log(data);
+const editRow = (data: UserModelList) => {
+  const { correo, materno, nombre, paterno, estado, google, password, uid } =
+    data;
+  user.value = {
+    correo,
+    materno,
+    nombre,
+    paterno,
+    estado,
+    google,
+    password,
+    uid,
+    rol: data.rol._id,
+  };
+  modalState.value = true;
 };
-const deleteRow = (data: UserModel) => {
-  console.log(data);
+const deleteRow = async (data: UserModelList) => {
+  await deleteUser(data.uid || '');
 };
 </script>
 <template>

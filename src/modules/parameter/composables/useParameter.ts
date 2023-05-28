@@ -14,8 +14,7 @@ const getParameters = async (type: string): Promise<ParameterResponseInterface> 
 
 const useParameter = () => {
 
-    const getParameterList = (type: string | undefined): Promise<ParameterResponseInterface> => {
-        console.log(2);
+    const getParameterList = (type?: string ): Promise<ParameterResponseInterface> => {
         const data = getParameters(type || '')
             .then(({ ok, msg, data }) => {
                 if (ok === true) {
