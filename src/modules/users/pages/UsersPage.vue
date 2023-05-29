@@ -2,7 +2,6 @@
 import useModal from '../composables/useModal';
 import UsersTable from '../components/UsersTable.vue';
 import UserModal from '../components/UserModal.vue';
-//import { ref } from 'vue';
 
 const { setModalState } = useModal();
 

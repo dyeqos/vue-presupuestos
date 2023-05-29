@@ -1,6 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
 import isAuthenticated from 'src/guards/auth-guard';
 import dashboardRoute from '../modules/dashboard/routes/dashboard-route';
+import authRoute from '../modules/auth/routes/auth.route';
+import paramRoute from '../modules/parameter/routes/param.route';
 import usersRoute from '../modules/users/routes/users-route';
 import activeRoute from '../modules/active/routes/active-route';
 
@@ -8,13 +10,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/auth',
     component: () => import('../modules/auth/layouts/AuthMain.vue'),
-    children: [
-      {
-        path: 'login',
-        name: 'auth-login',
-        component: () => import('../modules/auth/pages/AuthLogin.vue'),
-      },
-    ],
+    children: authRoute,
   },
   {
     path: '/dashboard',
@@ -33,6 +29,13 @@ const routes: RouteRecordRaw[] = [
     beforeEnter: [isAuthenticated],
     component: () => import('layouts/MainLayout.vue'),
     children: activeRoute,
+  },
+
+  {
+    path: '/parameter',
+    beforeEnter: [isAuthenticated],
+    component: () => import('layouts/MainLayout.vue'),
+    children: paramRoute,
   },
   {
     path: '/',

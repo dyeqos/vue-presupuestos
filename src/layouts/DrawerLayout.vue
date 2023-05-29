@@ -37,6 +37,12 @@ const menuList: MenuItemInterface[] = [
     ],
   },
   {
+    title: 'Parametros',
+    caption: 'Gestion de Parametros',
+    icon: 'mdi-tools',
+    link: '#/parameter',
+  },
+  {
     title: 'Forum',
     caption: 'forum.quasar.dev',
     icon: 'mdi-alert-circle',
